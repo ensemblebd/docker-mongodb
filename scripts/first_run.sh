@@ -15,7 +15,7 @@ while ! nc -vz localhost 27017; do sleep 1; done
 
 # Create User
 echo "Creating user: \"$USER\"..."
-mongo $DB --eval "db.createUser({ user: '$USER', pwd: '$PASS', roles: [ { role: '$ROLE', db: '$DB' } ] });"
+mongo $DB --eval "db.createUser({ user: '$USER', pwd: '$PASS', roles: [{ role:'dbAdminAnyDatabase',db:'$DB'},{role:'readWriteAnyDatabase',db:'$DB'},{role:'userAdminAnyDatabase',db:'$DB'},{role:'clusterAdmin',db:'$DB'}] });"
 
 # Stop MongoDB service
 /usr/bin/mongod --dbpath /data --shutdown
